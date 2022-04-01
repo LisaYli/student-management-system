@@ -8,6 +8,8 @@ public interface StudentRepository {
 
     List<Student> getAllStudents();
 
+    Student findStudentById(Long id);
+
     void createStudent(Student student);
 
     void updateStudent(Student student);

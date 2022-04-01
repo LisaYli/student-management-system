@@ -21,6 +21,11 @@ public class StudentService implements StudentRepository {
     }
 
     @Override
+    public Student findStudentById(Long id) {
+        return entityManager.find(Student.class,id);
+    }
+
+    @Override
     public void createStudent(Student student) {
         entityManager.persist(student);
     }
