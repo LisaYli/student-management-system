@@ -10,4 +10,7 @@ public class StudentNotFoundException extends WebApplicationException {
         super(Response.status(Response.Status.NOT_FOUND)
                 .entity(message).type(MediaType.TEXT_PLAIN).build());
     }
+
+
+
 }
