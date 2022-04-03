@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 
 @Getter
@@ -19,9 +19,13 @@ public class Student{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String firstName;
+    @NotNull
+    private String firstname;
+    @NotNull
     private String lastName;
+    @NotNull
     private String email;
+
     private String phoneNumber;
 
 
