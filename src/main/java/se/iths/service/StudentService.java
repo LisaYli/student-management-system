@@ -22,7 +22,7 @@ public class StudentService implements StudentRepository {
 
     @Override
     public Student findStudentById(Long id) {
-        return entityManager.find(Student.class,id);
+        return entityManager.find(Student.class, id);
     }
 
     @Override
@@ -36,9 +36,15 @@ public class StudentService implements StudentRepository {
     }
 
     @Override
-    public String deleteStudent(Long id) {
+    public void deleteStudent(Long id) {
         Student findStudent = entityManager.find(Student.class, id);
         entityManager.remove(findStudent);
-        return "Student with " + id + " is removed from the database!:)";
+        System.out.println("Student with " + id + " is removed");
+    }
+
+    public List<Student> findStudentByLastname(String lastname) {
+        String query = "SELECT s FROM Student s WHERE s.lastName = :lastname";
+        return entityManager.createQuery(query, Student.class).setParameter("lastname", lastname).getResultList();
     }
 }
+
