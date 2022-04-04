@@ -1,7 +1,6 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
-import se.iths.exceptions.StudentException;
 import se.iths.service.StudentService;
 import se.iths.validations.StudentValidation;
 
@@ -84,8 +83,6 @@ public class StudentRest {
         var studentToUpdate = studentService.updateStudentEmail(id, student.getEmail());
         return Response.ok(studentToUpdate).build();
     }
-
-
 
 
 }

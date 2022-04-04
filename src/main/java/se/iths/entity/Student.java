@@ -19,12 +19,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty(message = "cant be empty")
+    @NotEmpty()
     @Column(unique=true)
     private String email;
-    @NotEmpty(message = "cant be empty")
+    @NotEmpty()
     private String firstname;
-    @NotEmpty(message = "cant be empty")
+    @NotEmpty()
     private String lastname;
 
 
