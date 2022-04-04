@@ -4,7 +4,7 @@ import se.iths.entity.Student;
 
 import java.util.List;
 
-public interface StudentRepository {
+public interface StudentRepository{
 
     List<Student> getAllStudents();
 
@@ -12,7 +12,6 @@ public interface StudentRepository {
 
     void createStudent(Student student);
 
-    void updateStudent(Student student);
 
     void deleteStudent(Long id);
 

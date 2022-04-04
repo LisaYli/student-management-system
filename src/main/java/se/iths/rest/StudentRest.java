@@ -1,8 +1,9 @@
 package se.iths.rest;
 
 import se.iths.entity.Student;
-import se.iths.exceptions.StudentNotFoundException;
+import se.iths.exceptions.StudentException;
 import se.iths.service.StudentService;
+import se.iths.validations.StudentValidation;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -22,9 +23,13 @@ public class StudentRest {
     @Path("new")
     @POST
     public Response createStudent(Student student) {
+        var students = studentService.getAllStudents();
+        StudentValidation.checkEmailValidity(students, student.getEmail());
+        StudentValidation.nullValidation(student);
         studentService.createStudent(student);
         return Response.ok(student).build();
     }
+
 
     @Path("getall")
     @GET
@@ -35,36 +40,52 @@ public class StudentRest {
 
     @Path("{lastname}")
     @GET
-    public Response getStudentsByLastName(@PathParam("lastname") String lastname){
-        var student = studentService.findStudentByLastname(lastname);
-        return Response.ok(student).build();
-    }
+    public Response getStudentsByLastName(@PathParam("lastname") String lastname) {
+        var students = studentService.findStudentByLastname(lastname);
 
+        return Response.ok(students).build();
 
-    @Path("update")
-    @PUT
-    public Response updateStudent(Student student) {
-        studentService.updateStudent(student);
-        return Response.ok(student).build();
-    }
-
-    @Path("{id}")
-    @DELETE
-    public Response deleteStudent(@PathParam("id") Long id) {
-        findStudentById(id);
-        studentService.deleteStudent(id);
-        return Response.ok().build();
     }
 
     @Path("findbyid/{id}")
     @GET
     public Response findStudentById(@PathParam("id") Long id) {
         Student studentToFind = studentService.findStudentById(id);
-        if (studentToFind == null) {
-            throw new StudentNotFoundException("Student with ID: " + id + " do not exist, please try another one!");
-        }
+        StudentValidation.checkIfStudentExist(id, studentToFind);
         return Response.ok(studentToFind).build();
     }
+
+
+    @Path("{id}")
+    @DELETE
+    public Response deleteStudent(@PathParam("id") Long id) {
+        studentService.deleteStudent(id);
+        return Response.ok().build();
+    }
+
+
+
+    @Path("firstname/{id}")
+    @PATCH
+    public Response updateStudentFirstname(@PathParam("id") Long id, Student student) {
+        var studentToUpdate = studentService.updateStudentFirstname(id, student.getFirstname());
+        return Response.ok(studentToUpdate).build();
+    }
+
+    @Path("lastname/{id}")
+    @PATCH
+    public Response updateStudentLastname(@PathParam("id") Long id, Student student) {
+        var studentToUpdate = studentService.updateStudentLastname(id, student.getLastname());
+        return Response.ok(studentToUpdate).build();
+    }
+    @Path("email/{id}")
+    @PATCH
+    public Response updateStudentEmail(@PathParam("id") Long id, Student student) {
+        var studentToUpdate = studentService.updateStudentEmail(id, student.getEmail());
+        return Response.ok(studentToUpdate).build();
+    }
+
+
 
 
 }

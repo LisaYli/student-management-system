@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 
 @Getter
@@ -14,17 +14,19 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Student{
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    private String firstname;
-    @NotNull
-    private String lastName;
-    @NotNull
+    @NotEmpty(message = "cant be empty")
+    @Column(unique=true)
     private String email;
+    @NotEmpty(message = "cant be empty")
+    private String firstname;
+    @NotEmpty(message = "cant be empty")
+    private String lastname;
+
 
     private String phoneNumber;
 
